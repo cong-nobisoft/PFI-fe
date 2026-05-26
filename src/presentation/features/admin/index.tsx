@@ -1,8 +1,8 @@
-import { m } from '@/paraglide/messages'
-import { useAuth } from '@/presentation/provider/auth/auth-provider'
+import { useAuthStore } from '@/presentation/stores/useAuthStore';
+import { m } from '@/paraglide/messages';
 
 export default function AdminPage() {
-  const { user } = useAuth()
+  const user = useAuthStore(state => state.user);
 
   return (
     <main className="mx-auto max-w-5xl px-6 py-10">
@@ -49,5 +49,5 @@ export default function AdminPage() {
         </div>
       </section>
     </main>
-  )
+  );
 }

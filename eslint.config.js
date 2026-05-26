@@ -1,9 +1,9 @@
-import globals from 'globals'
-import js from '@eslint/js'
-import pluginQuery from '@tanstack/eslint-plugin-query'
-import reactHooks from 'eslint-plugin-react-hooks'
-import reactRefresh from 'eslint-plugin-react-refresh'
-import tseslint from 'typescript-eslint'
+import globals from 'globals';
+import js from '@eslint/js';
+import pluginQuery from '@tanstack/eslint-plugin-query';
+import reactHooks from 'eslint-plugin-react-hooks';
+import reactRefresh from 'eslint-plugin-react-refresh';
+import tseslint from 'typescript-eslint';
 
 export default tseslint.config(
   { ignores: ['dist', 'node_modules', 'src/paraglide'] },
@@ -54,4 +54,4 @@ export default tseslint.config(
       'no-duplicate-imports': 'error',
     },
   },
-)
+);

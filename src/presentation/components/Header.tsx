@@ -1,31 +1,31 @@
-import { useLogout } from '@/presentation/hooks/auth/useLogout'
-import { useAuth } from '@/presentation/provider/auth/auth-provider'
-import { m } from '@/paraglide/messages'
-import { getLocale, locales, setLocale } from '@/paraglide/runtime.js'
-import { Roles } from '@/shared/enums/Roles'
-import { Link, useRouter } from '@tanstack/react-router'
+import { useLogout } from '@/presentation/hooks/auth/useLogout';
+import { useAuthStore } from '@/presentation/stores/useAuthStore';
+import { m } from '@/paraglide/messages';
+import { getLocale, locales, setLocale } from '@/paraglide/runtime.js';
+import { Roles } from '@/shared/enums/Roles';
+import { Link, useRouter } from '@tanstack/react-router';
 
 export default function Header() {
-  const router = useRouter()
-  const { user } = useAuth()
-  const { logout, isPending } = useLogout()
-  const currentLocale = getLocale()
-  const canAccessAdmin = user?.role?.id === Roles.ADMIN
+  const router = useRouter();
+  const user = useAuthStore(state => state.user);
+  const { logout, isPending } = useLogout();
+  const currentLocale = getLocale();
+  const canAccessAdmin = user?.role?.id === Roles.ADMIN;
 
   const handleLogout = () => {
     logout(() => {
       void router.navigate({
         to: '/auth/login',
         replace: true,
-      })
-    })
-  }
+      });
+    });
+  };
 
   const handleLanguageChange = (locale: (typeof locales)[number]) => {
     if (locale !== currentLocale) {
-      void setLocale(locale)
+      void setLocale(locale);
     }
-  }
+  };
 
   return (
     <header className="border-b border-slate-200 bg-white/90 backdrop-blur">
@@ -89,5 +89,5 @@ export default function Header() {
         </div>
       </div>
     </header>
-  )
+  );
 }

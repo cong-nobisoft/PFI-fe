@@ -1,7 +1,7 @@
 export class RequestResponse {
-  status: number
+  status: number;
 
   constructor(status: number) {
-    this.status = status
+    this.status = status;
   }
 }

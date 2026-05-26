@@ -1,10 +1,9 @@
 @import 'tailwindcss';
+@import './global.css';
 
 body {
   @apply m-0;
-  font-family:
-    -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu',
-    'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
+  font-family: var(--font-inter);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
@@ -12,4 +11,148 @@ body {
 code {
   font-family:
     source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
+}
+
+/* =========================================
+ * ButtonCommon — Figma Design System
+ * Sizes: large | medium | small
+ * States: default | hover | press | disabled
+ * ========================================= */
+
+/* Base button reset & shared styles */
+.btn-common {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 8px !important;
+  border-radius: 8px !important;
+  border-width: 1.5px !important;
+  border-style: solid !important;
+  font-family: 'Inter', sans-serif !important;
+  font-weight: 500 !important;
+  font-size: 14px !important;
+  line-height: 20px !important;
+  color: #343a40 !important;
+  white-space: nowrap !important;
+  cursor: pointer !important;
+  transition: background-color 0.15s ease, box-shadow 0.15s ease !important;
+  height: auto !important;
+}
+
+.btn-common .btn-label {
+  display: inline-flex;
+  align-items: center;
+  line-height: 20px;
+}
+
+.btn-common .btn-icon {
+  display: inline-flex;
+  align-items: center;
+  width: 20px;
+  height: 20px;
+  flex-shrink: 0;
+}
+
+/* ---------- Sizes ---------- */
+.btn-size-large {
+  padding: 16px 24px !important;
+}
+
+.btn-size-medium {
+  padding: 12px 20px !important;
+}
+
+.btn-size-small {
+  padding: 8px 20px !important;
+}
+
+/* ---------- Gradient border (default state) ---------- */
+.btn-gradient-border {
+  background-color: #ffffff !important;
+  border-color: transparent !important;
+  background-image:
+    linear-gradient(#ffffff, #ffffff),
+    linear-gradient(90deg, #fd1ce3 0%, #dee50e 50%, #30ebd6 100%) !important;
+  background-origin: border-box !important;
+  background-clip: padding-box, border-box !important;
+  color: #343a40 !important;
+}
+
+.btn-gradient-border svg,
+.btn-gradient-border .btn-icon {
+  color: #343a40 !important;
+}
+
+/* Hover state */
+.btn-gradient-border:not(:disabled):hover,
+.btn-gradient-border:not([disabled]):hover {
+  background-color: #f9fafa !important;
+  background-image:
+    linear-gradient(#f9fafa, #f9fafa),
+    linear-gradient(90deg, #fd1ce3 0%, #dee50e 50%, #30ebd6 100%) !important;
+  background-origin: border-box !important;
+  background-clip: padding-box, border-box !important;
+  color: #343a40 !important;
+}
+
+/* Press / active state */
+.btn-gradient-border:not(:disabled):active,
+.btn-gradient-border:not([disabled]):active {
+  background-color: #f0f1f2 !important;
+  background-image:
+    linear-gradient(#f0f1f2, #f0f1f2),
+    linear-gradient(90deg, #fd1ce3 0%, #dee50e 50%, #30ebd6 100%) !important;
+  background-origin: border-box !important;
+  background-clip: padding-box, border-box !important;
+}
+
+/* ---------- Disabled state ---------- */
+.btn-disabled,
+.btn-common:disabled,
+.btn-common[disabled] {
+  background-color: #f9fafa !important;
+  background-image: none !important;
+  border-color: #cfd4d8 !important;
+  color: #97a1aa !important;
+  cursor: not-allowed !important;
+  pointer-events: none !important;
+  box-shadow: none !important;
+}
+
+.btn-disabled .btn-icon,
+.btn-common:disabled .btn-icon,
+.btn-common[disabled] .btn-icon {
+  color: #97a1aa !important;
+}
+
+/* -----------------------------
+ * Custom Form Item Typography 
+ * ----------------------------- */
+
+/* Helper Text (Error / Extra) matching Figma C3 (10px, weight 500) */
+.ant-form-item-explain,
+.ant-form-item-extra {
+  font-size: 10px !important;
+  font-weight: 500 !important;
+  line-height: 14px !important;
+  margin-top: 8px !important; /* 8px gap between Input and Helper Text */
+}
+
+/* Ensure Label typography is strictly matching Figma B4 (14px, weight 500) */
+.ant-form-item-label > label {
+  font-weight: 500 !important;
+}
+
+/* =========================================
+ * Form Input Autofill Fix
+ * Fixes Chrome/Webkit pale blue/yellow background on autofill
+ * ========================================= */
+input:-webkit-autofill,
+input:-webkit-autofill:hover, 
+input:-webkit-autofill:focus, 
+input:-webkit-autofill:active {
+  -webkit-text-fill-color: #131927 !important;
+  background-color: transparent !important;
+  color: #131927 !important;
+  transition: background-color 5000s ease-in-out 0s !important;
 }

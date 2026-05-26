@@ -1,5 +1,5 @@
-import { useMutation } from '@tanstack/react-query'
-import useAxios from './useAxios'
+import { useMutation } from '@tanstack/react-query';
+import useAxios from './useAxios';
 
 export const useMultipartApi = <TRequest, TResponse>({
   /**
@@ -13,25 +13,25 @@ export const useMultipartApi = <TRequest, TResponse>({
   method,
   endpoint,
 }: {
-  method: 'post' | 'put' | 'patch'
-  endpoint: string
+  method: 'post' | 'put' | 'patch';
+  endpoint: string;
 }) => {
-  const { axiosInstance } = useAxios()
+  const { axiosInstance } = useAxios();
 
   return useMutation<TResponse, Error, TRequest>({
     mutationFn: async (body) => {
-      const formData = new FormData()
+      const formData = new FormData();
 
       // Handle files and other data
       Object.entries(body as any).forEach(([key, value]) => {
         if (value instanceof File) {
-          formData.append(key, value)
+          formData.append(key, value);
         } else if (Array.isArray(value)) {
           // Handle array values (like details array)
 
           value.forEach((item, index) => {
             if (item instanceof File) {
-              formData.append(`${key}`, item)
+              formData.append(`${key}`, item);
             } else if (
               typeof item === 'object' &&
               item !== null &&
@@ -41,23 +41,23 @@ export const useMultipartApi = <TRequest, TResponse>({
                 formData.append(
                   `${key}[${index}][${itemKey}]`,
                   itemValue as string,
-                )
-              })
+                );
+              });
             } else {
-              formData.append(`${key}[${index}]`, item as string)
+              formData.append(`${key}[${index}]`, item as string);
             }
-          })
+          });
         } else if (value !== null && value !== undefined) {
-          formData.append(key, value.toString())
+          formData.append(key, value.toString());
         }
-      })
+      });
 
       const response = await axiosInstance[method](endpoint, formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
         },
-      })
-      return response.data
+      });
+      return response.data;
     },
-  })
-}
+  });
+};

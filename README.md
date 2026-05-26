@@ -325,7 +325,7 @@ This project uses **Mock Service Worker (MSW)** to simulate the backend API in d
   ```ts
   enableMocking().then(() => {
     // render app...
-  })
+  });
   ```
 
 - **Base URL for mocked endpoints**
@@ -467,10 +467,10 @@ This project uses **Paraglide.js** and **Inlang** for type-safe internationaliza
 ### Using Translations
 
 ```tsx
-import * as m from '@paraglide/messages'
+import * as m from '@paraglide/messages';
 
 // In your component
-;<h1>{m.dashboardPage()}</h1>
+<h1>{m.dashboardPage()}</h1>;
 ```
 
 ### URL Localization

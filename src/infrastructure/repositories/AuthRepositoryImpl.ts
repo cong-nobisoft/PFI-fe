@@ -1,5 +1,5 @@
-import { type ResponseCommon } from '@/application/dto/response/ResponseCommon'
-import { type AuthRepository } from '@/application/repositories/AuthRepository'
+import { type ResponseCommon } from '@/application/dto/response/ResponseCommon';
+import { type AuthRepository } from '@/application/repositories/AuthRepository';
 import {
   type ChangePasswordRequest,
   type ConfirmEmailRequest,
@@ -14,14 +14,14 @@ import {
   type ResetPasswordRequest,
   type UpdateMeRequest,
   type User,
-} from '@/domain/models/Auth'
+} from '@/domain/models/Auth';
 import {
   useGetApi,
   usePatchApi,
   usePostApi,
-} from '@/infrastructure/hooks/useApi'
-import { Endpoints } from '@/shared/endpoints'
-import { type QueryOptions } from '@tanstack/react-query'
+} from '@/infrastructure/hooks/useApi';
+import { Endpoints } from '@/shared/endpoints';
+import { type QueryOptions } from '@tanstack/react-query';
 
 export const AuthRepositoryImpl = (): AuthRepository => ({
   login: () =>
@@ -68,4 +68,4 @@ export const AuthRepositoryImpl = (): AuthRepository => ({
     usePatchApi<UpdateMeRequest, ResponseCommon<User>>({
       endpoint: Endpoints.Auth.ME,
     }),
-})
+});

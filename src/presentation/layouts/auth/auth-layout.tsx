@@ -1,28 +1,90 @@
-import { m } from '@/paraglide/messages'
+import logoWhite from '@/assets/images/logo-white.svg';
+import authBg from '@/assets/images/auth-bg.png';
 
 type AuthLayoutProps = {
-  children: React.ReactNode
-}
+  children: React.ReactNode;
+};
 
 export function AuthLayout({ children }: AuthLayoutProps) {
   return (
-    <div className="relative min-h-screen overflow-hidden bg-[radial-gradient(circle_at_top,_rgba(148,163,184,0.22),_transparent_42%),linear-gradient(180deg,_#f8fafc_0%,_#e2e8f0_100%)]">
-      <div className="mx-auto grid min-h-screen w-full max-w-6xl items-center gap-10 px-6 py-12 lg:grid-cols-[1.1fr_0.9fr] lg:px-10">
-        <div className="hidden rounded-[2rem] border border-white/60 bg-slate-950 p-10 text-slate-100 shadow-2xl shadow-slate-900/15 lg:block">
-          <p className="text-sm font-semibold uppercase tracking-[0.3em] text-slate-400">
-            {m.auth_layout_brand()}
-          </p>
-          <h1 className="mt-6 max-w-md text-4xl font-semibold leading-tight">
-            {m.auth_layout_title()}
-          </h1>
-          <p className="mt-6 max-w-lg text-sm leading-7 text-slate-300">
-            {m.auth_layout_description()}
-          </p>
-        </div>
-        <div className="rounded-[2rem] border border-white/70 bg-white/90 py-6 shadow-xl shadow-slate-300/40 backdrop-blur">
-          {children}
-        </div>
+    <div className="relative flex min-h-screen w-full flex-col overflow-hidden bg-[var(--color-grey-900)]">
+
+      {/*
+       * Background decorative image — rotated, positioned top-right as per Figma.
+       * Uses inline px only because this is a purely decorative, non-layout element
+       * with precise transform positioning that cannot be expressed responsively.
+       */}
+      <div
+        className="pointer-events-none absolute"
+        style={{
+          width: '2081px',
+          height: '1363px',
+          right: '-554px',
+          top: '-419px',
+          transform: 'rotate(115.48deg)',
+          transformOrigin: 'center center',
+        }}
+      >
+        <img
+          alt=""
+          src={authBg}
+          className="block h-full w-full object-cover opacity-50"
+        />
       </div>
+
+      {/* ── Header — Logo ── */}
+      <header className="relative z-10 flex w-full items-center px-10 py-8">
+        <img
+          alt="Press Forward Integrations"
+          src={logoWhite}
+          className="h-[36px] w-[112px] object-contain"
+        />
+      </header>
+
+      {/* ── Main Content ── */}
+      <main className="relative z-10 flex flex-1 items-center justify-center p-6">
+        {children}
+      </main>
+
+      {/* ── Footer ── */}
+      <footer className="relative z-10 flex w-full items-center justify-between px-10 py-8">
+        <p
+          className="font-normal text-[var(--color-white-100)]"
+          style={{
+            fontSize: 'var(--font-b3-size)',
+            lineHeight: 'var(--font-b3-line-height)',
+          }}
+        >
+          © 2026 Press Forward Integrations
+        </p>
+        <button className="flex items-center gap-1.5 text-[var(--color-white-80)] transition hover:text-[var(--color-white-100)]">
+          <svg
+            width="16"
+            height="16"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          >
+            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
+            <polyline points="14 2 14 8 20 8" />
+            <line x1="16" y1="13" x2="8" y2="13" />
+            <line x1="16" y1="17" x2="8" y2="17" />
+            <polyline points="10 9 9 9 8 9" />
+          </svg>
+          <span
+            className="font-normal"
+            style={{
+              fontSize: 'var(--font-b3-size)',
+              lineHeight: 'var(--font-b3-line-height)',
+            }}
+          >
+            Terms of Service
+          </span>
+        </button>
+      </footer>
     </div>
-  )
+  );
 }

@@ -1,9 +1,9 @@
-import { useRepository } from '@/di/RepositoriesProvider'
-import { type UpdateMeRequest } from '@/domain/models/Auth'
+import { useRepository } from '@/di/RepositoriesProvider';
+import { type UpdateMeRequest } from '@/domain/models/Auth';
 
 export const useUpdateMe = () => {
-  const { authRepository } = useRepository()
-  const { mutate: updateMe, ...rest } = authRepository.updateMe()
+  const { authRepository } = useRepository();
+  const { mutate: updateMe, ...rest } = authRepository.updateMe();
 
   return {
     updateMe: (
@@ -12,11 +12,11 @@ export const useUpdateMe = () => {
     ) => {
       updateMe(requestData, {
         onSuccess: (_data: any) => {
-          onSuccess?.(_data)
+          onSuccess?.(_data);
         },
         onError: (_error: any) => {},
-      })
+      });
     },
     ...rest,
-  }
-}
+  };
+};

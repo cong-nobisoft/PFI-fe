@@ -1,5 +1,5 @@
-import type { FormattedError } from '@/application/dto/response/ErrorResponse'
-import { buildUrl } from '@/shared/url'
+import type { FormattedError } from '@/application/dto/response/ErrorResponse';
+import { buildUrl } from '@/shared/url';
 import {
   type MutationFunctionContext,
   type MutationOptions,
@@ -7,18 +7,18 @@ import {
   useMutation,
   useQueries,
   useQuery,
-} from '@tanstack/react-query'
-import { type AxiosRequestConfig } from 'axios'
-import useAxios from './useAxios'
+} from '@tanstack/react-query';
+import { type AxiosRequestConfig } from 'axios';
+import useAxios from './useAxios';
 
-export type ApiError = FormattedError
+export type ApiError = FormattedError;
 
 export interface ApiConfig<TResponse, TRequest> {
-  showErrorToast?: boolean
-  successMessage?: string
-  silentError?: boolean
-  onError?: (error: ApiError, variables?: TRequest, context?: unknown) => void
-  onSuccess?: (data: TResponse, variables: TRequest, context: unknown) => void
+  showErrorToast?: boolean;
+  successMessage?: string;
+  silentError?: boolean;
+  onError?: (error: ApiError, variables?: TRequest, context?: unknown) => void;
+  onSuccess?: (data: TResponse, variables: TRequest, context: unknown) => void;
 }
 
 const handleApiError = <TRequest>(
@@ -28,8 +28,8 @@ const handleApiError = <TRequest>(
   variables?: TRequest | undefined,
   context?: unknown,
 ) => {
-  if (onError) onError(error, variables, context)
-}
+  if (onError) onError(error, variables, context);
+};
 
 export const useGetApi = <TResponse>({
   endpoint,
@@ -37,12 +37,12 @@ export const useGetApi = <TResponse>({
   queryParams = {},
   options = {},
 }: {
-  endpoint: string
-  urlParams?: Record<string, string | number>
-  queryParams?: Record<string, string | number | boolean | undefined>
-  options?: Omit<UseQueryOptions<TResponse, ApiError>, 'queryKey' | 'queryFn'>
+  endpoint: string;
+  urlParams?: Record<string, string | number>;
+  queryParams?: Record<string, string | number | boolean | undefined>;
+  options?: Omit<UseQueryOptions<TResponse, ApiError>, 'queryKey' | 'queryFn'>;
 }) => {
-  const { axiosInstance, newAbortSignal } = useAxios()
+  const { axiosInstance, newAbortSignal } = useAxios();
 
   return useQuery<TResponse, ApiError>({
     queryKey: [endpoint, urlParams, queryParams],
@@ -50,24 +50,27 @@ export const useGetApi = <TResponse>({
       const response = await axiosInstance.get<TResponse>(
         buildUrl(endpoint, urlParams, queryParams),
         { signal: newAbortSignal() },
-      )
-      return response.data
+      );
+      return response.data;
     },
     ...options,
-  })
-}
+  });
+};
 
 export const useQueriesApi = <TResponse>({
   requests,
 }: {
   requests: Array<{
-    endpoint: string
-    urlParams?: Record<string, string | number>
-    queryParams?: Record<string, string | number | boolean | undefined>
-    options?: Omit<UseQueryOptions<TResponse, ApiError>, 'queryKey' | 'queryFn'>
-  }>
+    endpoint: string;
+    urlParams?: Record<string, string | number>;
+    queryParams?: Record<string, string | number | boolean | undefined>;
+    options?: Omit<
+      UseQueryOptions<TResponse, ApiError>,
+      'queryKey' | 'queryFn'
+    >;
+  }>;
 }) => {
-  const { axiosInstance, newAbortSignal } = useAxios()
+  const { axiosInstance, newAbortSignal } = useAxios();
 
   return useQueries({
     queries: requests.map(
@@ -77,14 +80,14 @@ export const useQueriesApi = <TResponse>({
           const response = await axiosInstance.get<TResponse>(
             buildUrl(endpoint, urlParams, queryParams),
             { signal: newAbortSignal() },
-          )
-          return response.data
+          );
+          return response.data;
         },
         ...options,
       }),
     ),
-  })
-}
+  });
+};
 
 const useMutationApi = <TRequest = void, TResponse = unknown>(
   method: 'post' | 'put' | 'delete' | 'patch' | 'patch',
@@ -95,21 +98,21 @@ const useMutationApi = <TRequest = void, TResponse = unknown>(
     buildQueryParams,
     options = {},
   }: {
-    endpoint: string
-    urlParams?: Record<string, string | number>
-    queryParams?: Record<string, string | number | boolean | undefined>
+    endpoint: string;
+    urlParams?: Record<string, string | number>;
+    queryParams?: Record<string, string | number | boolean | undefined>;
     buildQueryParams?: (
       payload: TRequest,
-    ) => Record<string, string | number | boolean | undefined>
+    ) => Record<string, string | number | boolean | undefined>;
     options?: MutationOptions<
       TResponse,
       ApiError,
       TRequest,
       ApiConfig<TResponse, TRequest>
-    >
+    >;
   },
 ) => {
-  const { axiosInstance, newAbortSignal } = useAxios()
+  const { axiosInstance, newAbortSignal } = useAxios();
   return useMutation<
     TResponse,
     ApiError,
@@ -120,12 +123,12 @@ const useMutationApi = <TRequest = void, TResponse = unknown>(
       const resolvedQueryParams = {
         ...queryParams,
         ...(buildQueryParams ? buildQueryParams(payload) : {}),
-      }
+      };
       const config: AxiosRequestConfig = {
         signal: newAbortSignal(),
         headers: options?.meta?.headers as Record<string, string>,
-      }
-      const url = buildUrl(endpoint, urlParams, resolvedQueryParams)
+      };
+      const url = buildUrl(endpoint, urlParams, resolvedQueryParams);
 
       const response =
         method === 'delete'
@@ -133,8 +136,8 @@ const useMutationApi = <TRequest = void, TResponse = unknown>(
               ...config,
               data: payload,
             })
-          : await axiosInstance[method]<TResponse>(url, payload, config)
-      return response.data
+          : await axiosInstance[method]<TResponse>(url, payload, config);
+      return response.data;
     },
     ...options,
     retry: false,
@@ -143,7 +146,7 @@ const useMutationApi = <TRequest = void, TResponse = unknown>(
       variables: TRequest,
       context: ApiConfig<TResponse, TRequest> | undefined,
     ) => {
-      const config = context || {}
+      const config = context || {};
       handleApiError(
         error,
         options.onError as
@@ -152,7 +155,7 @@ const useMutationApi = <TRequest = void, TResponse = unknown>(
         config.silentError,
         variables,
         context,
-      )
+      );
     },
     onSuccess: (
       data: TResponse,
@@ -166,72 +169,72 @@ const useMutationApi = <TRequest = void, TResponse = unknown>(
           variables,
           onMutateResult,
           context || ({} as ApiConfig<TResponse, TRequest>),
-        )
+        );
       }
     },
-  })
-}
+  });
+};
 export const usePostApi = <TRequest = void, TResponse = unknown>(props: {
-  endpoint: string
-  queryParams?: Record<string, string | number | boolean | undefined>
+  endpoint: string;
+  queryParams?: Record<string, string | number | boolean | undefined>;
   options?: MutationOptions<
     TResponse,
     ApiError,
     TRequest,
     ApiConfig<TResponse, TRequest>
-  >
-}) => useMutationApi<TRequest, TResponse>('post', props)
+  >;
+}) => useMutationApi<TRequest, TResponse>('post', props);
 
 export const usePutApi = <TRequest = void, TResponse = unknown>(props: {
-  endpoint: string
-  queryParams?: Record<string, string | number | boolean | undefined>
+  endpoint: string;
+  queryParams?: Record<string, string | number | boolean | undefined>;
   options?: MutationOptions<
     TResponse,
     ApiError,
     TRequest,
     ApiConfig<TResponse, TRequest>
-  >
-}) => useMutationApi<TRequest, TResponse>('put', props)
+  >;
+}) => useMutationApi<TRequest, TResponse>('put', props);
 
 export const usePatchApi = <TRequest = void, TResponse = unknown>(props: {
-  endpoint: string
-  queryParams?: Record<string, string | number | boolean | undefined>
+  endpoint: string;
+  queryParams?: Record<string, string | number | boolean | undefined>;
   options?: MutationOptions<
     TResponse,
     ApiError,
     TRequest,
     ApiConfig<TResponse, TRequest>
-  >
-}) => useMutationApi<TRequest, TResponse>('patch', props)
+  >;
+}) => useMutationApi<TRequest, TResponse>('patch', props);
 
 export const useDeleteApi = <TRequest = void, TResponse = unknown>(props: {
-  endpoint: string
-  queryParams?: Record<string, string | number | boolean | undefined>
+  endpoint: string;
+  queryParams?: Record<string, string | number | boolean | undefined>;
   buildQueryParams?: (
     payload: TRequest,
-  ) => Record<string, string | number | boolean | undefined>
+  ) => Record<string, string | number | boolean | undefined>;
   options?: MutationOptions<
     TResponse,
     ApiError,
     TRequest,
     ApiConfig<TResponse, TRequest>
-  >
-}) => useMutationApi<TRequest, TResponse>('delete', props)
+  >;
+}) => useMutationApi<TRequest, TResponse>('delete', props);
 
 export const usePostFormApi = <TResponse = unknown>(props: {
-  endpoint: string
-  urlParams?: Record<string, string | number>
-  queryParams?: Record<string, string | number | boolean | undefined>
+  endpoint: string;
+  urlParams?: Record<string, string | number>;
+  queryParams?: Record<string, string | number | boolean | undefined>;
   options?: MutationOptions<
     TResponse,
     ApiError,
     FormData,
     ApiConfig<TResponse, FormData>
-  >
+  >;
 }) => {
   const defaultHeaders = {
     'Content-Type': 'multipart/form-data',
-  }
+  };
   return useMutationApi<FormData, TResponse>('post', {
     ...props,
     options: {
@@ -244,5 +247,5 @@ export const usePostFormApi = <TResponse = unknown>(props: {
         },
       },
     },
-  })
-}
+  });
+};

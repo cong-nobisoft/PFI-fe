@@ -21,4 +21,4 @@ export const Constants = {
     DateTimeFormat: 'yyyy-MM-DD HH:mm:ss.SSSS',
     DateFormat: 'yyyy-MM-DD',
   },
-}
+};

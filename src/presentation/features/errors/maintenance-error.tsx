@@ -1,4 +1,4 @@
-import { m } from '@/paraglide/messages'
+import { m } from '@/paraglide/messages';
 
 export function MaintenanceError() {
   return (
@@ -14,5 +14,5 @@ export function MaintenanceError() {
         </div>
       </div>
     </div>
-  )
+  );
 }

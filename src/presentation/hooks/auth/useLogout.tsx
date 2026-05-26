@@ -1,10 +1,10 @@
-import { useRepository } from '@/di/RepositoriesProvider'
-import { useAuth } from '@/presentation/provider/auth/auth-provider'
+import { useRepository } from '@/di/RepositoriesProvider';
+import { useAuthStore } from '@/presentation/stores/useAuthStore';
 
 export const useLogout = () => {
-  const auth = useAuth()
-  const { authRepository } = useRepository()
-  const { mutate: logout, ...rest } = authRepository.logout()
+  const clearAuth = useAuthStore((state) => state.clearAuth);
+  const { authRepository } = useRepository();
+  const { mutate: logout, ...rest } = authRepository.logout();
 
   return {
     logout: (onSettled?: () => void) => {
@@ -12,12 +12,12 @@ export const useLogout = () => {
         {},
         {
           onSettled: () => {
-            auth.clearAuth()
-            onSettled?.()
+            clearAuth();
+            onSettled?.();
           },
         },
-      )
+      );
     },
     ...rest,
-  }
-}
+  };
+};

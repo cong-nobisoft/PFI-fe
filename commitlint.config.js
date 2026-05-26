@@ -34,4 +34,4 @@ export default {
     // Bỏ qua commit WIP (work in progress)
     (commit) => commit.toLowerCase().includes('wip'),
   ],
-}
+};

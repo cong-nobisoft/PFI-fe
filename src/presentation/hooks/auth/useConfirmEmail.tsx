@@ -1,9 +1,9 @@
-import { useRepository } from '@/di/RepositoriesProvider'
-import { type ConfirmEmailRequest } from '@/domain/models/Auth'
+import { useRepository } from '@/di/RepositoriesProvider';
+import { type ConfirmEmailRequest } from '@/domain/models/Auth';
 
 export const useConfirmEmail = () => {
-  const { authRepository } = useRepository()
-  const { mutate: confirmEmail, ...rest } = authRepository.confirmEmail()
+  const { authRepository } = useRepository();
+  const { mutate: confirmEmail, ...rest } = authRepository.confirmEmail();
 
   return {
     confirmEmail: (
@@ -12,11 +12,11 @@ export const useConfirmEmail = () => {
     ) => {
       confirmEmail(credentials, {
         onSuccess: () => {
-          onSuccess?.()
+          onSuccess?.();
         },
         onError: (_error: any) => {},
-      })
+      });
     },
     ...rest,
-  }
-}
+  };
+};

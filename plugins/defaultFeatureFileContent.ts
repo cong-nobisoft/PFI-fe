@@ -1,5 +1,5 @@
-import fs from 'fs'
-import path from 'path'
+import fs from 'fs';
+import path from 'path';
 
 export function ensureFileHasDefautCode(
   filePath: string,
@@ -8,17 +8,17 @@ export function ensureFileHasDefautCode(
 ) {
   // Check if file belongs to specified directory
   const inTargetDir = targetDirs.some((dir) => {
-    return filePath.startsWith(path.resolve(dir))
-  })
+    return filePath.startsWith(path.resolve(dir));
+  });
 
-  if (!inTargetDir) return
+  if (!inTargetDir) return;
 
-  if (!fs.existsSync(filePath)) return
+  if (!fs.existsSync(filePath)) return;
 
-  const content = fs.readFileSync(filePath, 'utf-8')
+  const content = fs.readFileSync(filePath, 'utf-8');
   if (content.trim() === '') {
-    fs.writeFileSync(filePath, defaultCode, 'utf-8')
+    fs.writeFileSync(filePath, defaultCode, 'utf-8');
     // eslint-disable-next-line no-console
-    console.log(`✅ Default code inserted into: ${filePath}`)
+    console.log(`✅ Default code inserted into: ${filePath}`);
   }
 }

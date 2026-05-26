@@ -1,9 +1,9 @@
-import { http, HttpResponse } from 'msw'
-import { Endpoints } from '@/shared/endpoints'
-import { env } from '@/env'
+import { http, HttpResponse } from 'msw';
+import { Endpoints } from '@/shared/endpoints';
+import { env } from '@/env';
 
 // Get API URL from environment variable
-const API_URL = env.VITE_APP_API_URL
+const API_URL = env.VITE_APP_API_URL;
 
 // MSW v2 can match full URLs or use wildcards
 // Match requests to the API URL from env
@@ -30,7 +30,7 @@ export const handlers = [
         },
       },
       success: true,
-    })
+    });
   }),
 
   http.get(`${API_URL}/${Endpoints.Auth.ME}`, async () => {
@@ -47,12 +47,12 @@ export const handlers = [
           name: 'user',
         },
       },
-    })
+    });
   }),
 
   http.post(`${API_URL}/${Endpoints.Auth.LOGOUT}`, async () => {
     return HttpResponse.json({
       result: true,
-    })
+    });
   }),
-]
+];

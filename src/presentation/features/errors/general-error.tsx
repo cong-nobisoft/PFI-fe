@@ -1,13 +1,13 @@
-import { m } from '@/paraglide/messages'
-import { useNavigate, useRouter } from '@tanstack/react-router'
+import { m } from '@/paraglide/messages';
+import { useNavigate, useRouter } from '@tanstack/react-router';
 
 type GeneralErrorProps = React.HTMLAttributes<HTMLDivElement> & {
-  minimal?: boolean
-}
+  minimal?: boolean;
+};
 
 export function GeneralError({ minimal = false }: GeneralErrorProps) {
-  const navigate = useNavigate()
-  const { history } = useRouter()
+  const navigate = useNavigate();
+  const { history } = useRouter();
   return (
     <div className={'h-svh w-full'}>
       <div className="m-auto flex h-full w-full flex-col items-center justify-center gap-2">
@@ -28,5 +28,5 @@ export function GeneralError({ minimal = false }: GeneralErrorProps) {
         )}
       </div>
     </div>
-  )
+  );
 }

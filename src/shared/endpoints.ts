@@ -1,4 +1,4 @@
-const Prefix = 'api/v1'
+const Prefix = 'api/v1';
 
 export const Endpoints = {
   Auth: {
@@ -21,4 +21,4 @@ export const Endpoints = {
     GET_ALL: `${Prefix}/users/getAll`,
     GET: `${Prefix}/users/get`,
   },
-}
+};

@@ -1,10 +1,10 @@
 export interface GetByIdCommonParams {
-  id: number
+  id: number;
 }
 export interface DeleteCommonParams {
-  id: number
+  id: number;
 }
 
 export interface UpdateStatusCommon {
-  status: string
+  status: string;
 }

@@ -1,3 +1,0 @@
-echo "Checking commit message..."
-yarn commitlint --edit "$1"
-echo "✅ Commit message is valid!"

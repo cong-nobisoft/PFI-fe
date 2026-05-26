@@ -1,41 +1,40 @@
-import { StrictMode } from 'react'
-import ReactDOM from 'react-dom/client'
-import { RouterProvider, createRouter } from '@tanstack/react-router'
+import { StrictMode } from 'react';
+import ReactDOM from 'react-dom/client';
+import { RouterProvider, createRouter } from '@tanstack/react-router';
 
-import * as TanStackQueryProvider from './presentation/provider/integrations/tanstack-query/root-provider.tsx'
+import * as TanStackQueryProvider from './presentation/provider/integrations/tanstack-query/root-provider.tsx';
 // Import the generated route tree
-import { routeTree } from './routeTree.gen'
+import { routeTree } from './routeTree.gen';
 
-import './styles/styles.css'
-import reportWebVitals from './reportWebVitals.ts'
-import { RepositoryProvider } from './di/RepositoriesProvider.tsx'
-import {
-  AuthProvider,
-  useAuth,
-} from './presentation/provider/auth/auth-provider.tsx'
-import { env } from './env'
-import { Toaster } from 'sonner'
-import { overwriteGetLocale } from './paraglide/runtime.js'
-import { resolvePreferredLocale } from './shared/locale'
+import './styles/styles.css';
+import reportWebVitals from './reportWebVitals.ts';
+import { RepositoryProvider } from './di/RepositoriesProvider.tsx';
+import { useAuthStore } from './presentation/stores/useAuthStore.ts';
+import { AuthSync } from './presentation/components/AuthSync.tsx';
+import { env } from './env';
+import { Toaster } from 'sonner';
+import { ThemeProvider } from './presentation/provider/theme/theme-provider';
+import { overwriteGetLocale } from './paraglide/runtime.js';
+import { resolvePreferredLocale } from './shared/locale';
 
-overwriteGetLocale(resolvePreferredLocale)
+overwriteGetLocale(resolvePreferredLocale);
 
 async function enableMocking() {
   if (import.meta.env.DEV && env.VITE_APP_ENABLE_MSW === 'true') {
-    const { worker } = await import('./mocks/browser')
+    const { worker } = await import('./mocks/browser');
     return worker.start({
       onUnhandledRequest: 'bypass',
       serviceWorker: {
         url: '/mockServiceWorker.js',
       },
-    })
+    });
   }
-  return Promise.resolve()
+  return Promise.resolve();
 }
 
 // Create a new router instance
 
-const TanStackQueryProviderContext = TanStackQueryProvider.getContext()
+const TanStackQueryProviderContext = TanStackQueryProvider.getContext();
 const router = createRouter({
   routeTree,
   context: {
@@ -70,17 +69,17 @@ const router = createRouter({
   //     }
   //   },
   // },
-})
+});
 
 // Register the router instance for type safety
 declare module '@tanstack/react-router' {
   interface Register {
-    router: typeof router
+    router: typeof router;
   }
 }
 
 export const InnerApp = () => {
-  const auth = useAuth()
+  const auth = useAuthStore();
   return (
     <RouterProvider
       router={router}
@@ -89,30 +88,31 @@ export const InnerApp = () => {
         auth,
       }}
     />
-  )
-}
+  );
+};
 
 // Render the app
 enableMocking().then(() => {
-  const rootElement = document.getElementById('app')
+  const rootElement = document.getElementById('app');
   if (rootElement && !rootElement.innerHTML) {
-    const root = ReactDOM.createRoot(rootElement)
+    const root = ReactDOM.createRoot(rootElement);
     root.render(
       <StrictMode>
         <RepositoryProvider>
           <TanStackQueryProvider.Provider {...TanStackQueryProviderContext}>
-            <AuthProvider>
+            <AuthSync />
+            <ThemeProvider>
               <InnerApp />
               <Toaster position="top-right" richColors />
-            </AuthProvider>
+            </ThemeProvider>
           </TanStackQueryProvider.Provider>
         </RepositoryProvider>
       </StrictMode>,
-    )
+    );
   }
-})
+});
 
 // If you want to start measuring performance in your app, pass a function
 // to log results (for example: reportWebVitals(console.log))
 // or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
-reportWebVitals()
+reportWebVitals();

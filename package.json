@@ -26,6 +26,9 @@
     "i18n:gen": "paraglide-js compile"
   },
   "dependencies": {
+    "@ant-design/icons": "^6.2.3",
+    "@fontsource/inter": "^5.2.8",
+    "@heroicons/react": "^2.2.0",
     "@t3-oss/env-core": "^0.12.0",
     "@tailwindcss/vite": "^4.0.6",
     "@tanstack/react-devtools": "^0.2.2",
@@ -34,13 +37,15 @@
     "@tanstack/react-router": "^1.132.0",
     "@tanstack/react-router-devtools": "^1.132.0",
     "@tanstack/router-plugin": "^1.132.0",
+    "antd": "^6.4.3",
     "axios": "^1.12.2",
     "dayjs": "^1.11.18",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "sonner": "^2.0.7",
     "tailwindcss": "^4.0.6",
-    "zod": "^3.24.2"
+    "zod": "^3.24.2",
+    "zustand": "^5.0.13"
   },
   "devDependencies": {
     "@commitlint/cli": "^20.0.0",

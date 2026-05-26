@@ -1,6 +1,0 @@
-echo "🚀 Running pre-commit hooks..."
-
-# run staged checks
-yarn check:staged
-
-echo "✅ Pre-commit hooks completed!"
